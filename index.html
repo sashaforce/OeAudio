@@ -23,27 +23,16 @@ var handleSuccess = function(stream) {
   var chunks = [];
 
   var audioContext = new AudioContext();
-
-  //var oscillator = audioContext.createOscillator();
-  //console.log("oscillator: " + oscillator);
-  //var source = audioContext2.createMediaStreamSource(stream); // replace oscillator with media stream source
-  //console.log("media stream source: " + source);
-
-
-  //var dest = audioContext.createMediaStreamDestination();
-  var mediaRecorder = new MediaRecorder(stream); // was: dest.stream
-  //oscillator.connect(dest);
+  var mediaRecorder = new MediaRecorder(stream);
 
 
  button.addEventListener("click", function(element) {
    if (!clicked) {
        mediaRecorder.start();
-       //oscillator.start(0);
        element.target.innerHTML = "Stop recording";
        clicked = true;
      } else {
        mediaRecorder.stop();
-       //oscillator.stop(0);
        element.target.disabled = true;
      }
    });
@@ -68,48 +57,5 @@ var handleSuccess = function(stream) {
      .then(handleSuccess);
 </script>
 
-
-<!-- <div>
-  <audio id="player" controls></audio>
-</div>
-
-<script>
-  var handleSuccess = function(stream) {
-    var context = new AudioContext();
-    var source = context.createMediaStreamSource(stream);
-    var processor = context.createScriptProcessor(1024, 1, 1);
-    //var audiostorage = window.sessionStorage.blah;
-
-    source.connect(processor);
-    processor.connect(context.destination);
-    console.log("context.destination: " + context.destination);
-
-    processor.onaudioprocess = function(e) {
-      // Do something with the data, i.e Convert this to WAV
-      console.log(e.inputBuffer);
-      //audiostorage = e.inputBuffer;
-    };
-  };
-
-  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
-      .then(handleSuccess);
-</script> -->
-
-<!-- <script>
-  var player = document.getElementById('player');
-
-  var handleSuccess = function(stream) {
-    if (window.URL) {
-      console.log("window.URL");
-      player.src = window.URL.createObjectURL(stream);
-    } else {
-      console.log("else")
-      player.src = stream;
-    }
-  };
-
-  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
-      .then(handleSuccess);
-</script> -->
 </body>
 </html>
