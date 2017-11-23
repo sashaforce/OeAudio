@@ -18,10 +18,11 @@
  var chunks = [];
 
  var audioContext = new AudioContext();
+ var audioContext2 = new AudioContext();
 
  var oscillator = audioContext.createOscillator();
  console.log("oscillator: " + oscillator);
- var source = context.createMediaStreamSource(stream); // replace oscillator with media stream source
+ var source = audioContext2.createMediaStreamSource(stream); // replace oscillator with media stream source
  console.log("media stream source: " + source);
 
 
