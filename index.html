@@ -14,6 +14,7 @@
 
 <script>
 
+var blob;
 
 var handleSuccess = function(stream) {
   console.log("getUserMedia succeeded");
@@ -26,32 +27,32 @@ var handleSuccess = function(stream) {
   var mediaRecorder = new MediaRecorder(stream);
 
 
- button.addEventListener("click", function(element) {
-   if (!clicked) {
-       mediaRecorder.start();
-       element.target.innerHTML = "Stop recording";
-       clicked = true;
-     } else {
-       mediaRecorder.stop();
-       element.target.disabled = true;
-     }
-   });
+  button.addEventListener("click", function(element) {
+    if (!clicked) {
+      mediaRecorder.start();
+      element.target.innerHTML = "Stop recording";
+      clicked = true;
+    } else {
+      mediaRecorder.stop();
+      element.target.disabled = true;
+    }
+  });
 
-   mediaRecorder.ondataavailable = function(evt) {
-     // push each chunk (blobs) in an array
-     console.log("pushing blob");
-     chunks.push(evt.data);
-   };
+  mediaRecorder.ondataavailable = function(evt) {
+    // push each chunk (blobs) in an array
+    console.log("pushing blob");
+    chunks.push(evt.data);
+  };
 
-   mediaRecorder.onstop = function(evt) {
-     // Make blob out of our blobs, and open it.
-     console.log("mediaRecorder.onstop");
-     var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-     console.log("starting set audio source");
-     document.querySelector("audio").src = URL.createObjectURL(blob);
-     console.log("finished set audio source");
-   };
- };
+  mediaRecorder.onstop = function(evt) {
+    // Make blob out of our blobs, and open it.
+    console.log("mediaRecorder.onstop");
+    blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+    console.log("starting set audio source");
+    document.querySelector("audio").src = URL.createObjectURL(blob);
+    console.log("finished set audio source");
+  };
+};
 
  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
      .then(handleSuccess);
