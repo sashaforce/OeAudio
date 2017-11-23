@@ -23,28 +23,27 @@ var handleSuccess = function(stream) {
   var chunks = [];
 
   var audioContext = new AudioContext();
-  var audioContext2 = new AudioContext();
 
-  var oscillator = audioContext.createOscillator();
-  console.log("oscillator: " + oscillator);
-  var source = audioContext2.createMediaStreamSource(stream); // replace oscillator with media stream source
-  console.log("media stream source: " + source);
+  //var oscillator = audioContext.createOscillator();
+  //console.log("oscillator: " + oscillator);
+  //var source = audioContext2.createMediaStreamSource(stream); // replace oscillator with media stream source
+  //console.log("media stream source: " + source);
 
 
-  var dest = audioContext.createMediaStreamDestination();
-  var mediaRecorder = new MediaRecorder(dest.stream);
-  oscillator.connect(dest);
+  //var dest = audioContext.createMediaStreamDestination();
+  var mediaRecorder = new MediaRecorder(stream); // was: dest.stream
+  //oscillator.connect(dest);
 
 
  button.addEventListener("click", function(element) {
    if (!clicked) {
        mediaRecorder.start();
-       oscillator.start(0);
+       //oscillator.start(0);
        element.target.innerHTML = "Stop recording";
        clicked = true;
      } else {
        mediaRecorder.stop();
-       oscillator.stop(0);
+       //oscillator.stop(0);
        element.target.disabled = true;
      }
    });
