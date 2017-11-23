@@ -58,7 +58,9 @@ var handleSuccess = function(stream) {
      // Make blob out of our blobs, and open it.
      console.log("mediaRecorder.onstop");
      var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+     console.log("starting set audio source");
      document.querySelector("audio").src = URL.createObjectURL(blob);
+     console.log("finished set audio source");
    };
  };
 
