@@ -1,12 +1,15 @@
 <html>
 <body>
-HELLO WORLD!
+<h1>Voice Record Demo</h1>
 
-<h1>createMediaStreamDestination() demo</h1>
+<p>Record a short voice memo and play it back.</p>
+<div>
+  <button>Start recording</button>
+</div>
+<div>
+  <audio controls></audio>
+</div>
 
-<p>Encoding a pure sine wave to an Opus file </p>
-<button>Make sine wave</button>
-<audio controls></audio>
 <script>
  var button = document.querySelector("button");
  var clicked = false;
