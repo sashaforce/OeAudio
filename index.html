@@ -14,12 +14,13 @@
 
 <script>
 
-var button = document.querySelector("button");
-var clicked = false;
-var chunks = [];
 
 var handleSuccess = function(stream) {
   console.log("getUserMedia succeeded");
+
+  var button = document.querySelector("button");
+  var clicked = false;
+  var chunks = [];
 
   var audioContext = new AudioContext();
   var audioContext2 = new AudioContext();
@@ -33,7 +34,7 @@ var handleSuccess = function(stream) {
   var dest = audioContext.createMediaStreamDestination();
   var mediaRecorder = new MediaRecorder(dest.stream);
   oscillator.connect(dest);
-};
+
 
  button.addEventListener("click", function(element) {
    if (!clicked) {
@@ -46,17 +47,18 @@ var handleSuccess = function(stream) {
        oscillator.stop(0);
        element.target.disabled = true;
      }
- });
+   });
 
- mediaRecorder.ondataavailable = function(evt) {
-   // push each chunk (blobs) in an array
-   chunks.push(evt.data);
- };
+   mediaRecorder.ondataavailable = function(evt) {
+     // push each chunk (blobs) in an array
+     chunks.push(evt.data);
+   };
 
- mediaRecorder.onstop = function(evt) {
-   // Make blob out of our blobs, and open it.
-   var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
-   document.querySelector("audio").src = URL.createObjectURL(blob);
+   mediaRecorder.onstop = function(evt) {
+     // Make blob out of our blobs, and open it.
+     var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+     document.querySelector("audio").src = URL.createObjectURL(blob);
+   };
  };
 
  navigator.mediaDevices.getUserMedia({ audio: true, video: false })
