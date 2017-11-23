@@ -3,9 +3,11 @@
 <h1>Voice Record Demo</h1>
 
 <p>Record a short voice memo and play it back.</p>
+
 <div>
   <button>Start recording</button>
 </div>
+
 <div>
   <audio controls></audio>
 </div>
@@ -14,8 +16,15 @@
  var button = document.querySelector("button");
  var clicked = false;
  var chunks = [];
+
  var audioContext = new AudioContext();
+
  var oscillator = audioContext.createOscillator();
+ console.log("oscillator: " + oscillator);
+ var source = context.createMediaStreamSource(stream); // replace oscillator with media stream source
+ console.log("media stream source: " + source);
+
+
  var dest = audioContext.createMediaStreamDestination();
  var mediaRecorder = new MediaRecorder(dest.stream);
  oscillator.connect(dest);
@@ -55,7 +64,7 @@
     var context = new AudioContext();
     var source = context.createMediaStreamSource(stream);
     var processor = context.createScriptProcessor(1024, 1, 1);
-    var audiostorage = window.sessionStorage.blah;
+    //var audiostorage = window.sessionStorage.blah;
 
     source.connect(processor);
     processor.connect(context.destination);
@@ -64,7 +73,7 @@
     processor.onaudioprocess = function(e) {
       // Do something with the data, i.e Convert this to WAV
       console.log(e.inputBuffer);
-      audiostorage = e.inputBuffer;
+      //audiostorage = e.inputBuffer;
     };
   };
 
