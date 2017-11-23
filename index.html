@@ -14,11 +14,12 @@
 
 <script>
 
+var button = document.querySelector("button");
+var clicked = false;
+var chunks = [];
+
 var handleSuccess = function(stream) {
   console.log("getUserMedia succeeded");
-  var button = document.querySelector("button");
-  var clicked = false;
-  var chunks = [];
 
   var audioContext = new AudioContext();
   var audioContext2 = new AudioContext();
