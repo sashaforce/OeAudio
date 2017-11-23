@@ -50,11 +50,13 @@ var handleSuccess = function(stream) {
 
    mediaRecorder.ondataavailable = function(evt) {
      // push each chunk (blobs) in an array
+     console.log("pushing blob");
      chunks.push(evt.data);
    };
 
    mediaRecorder.onstop = function(evt) {
      // Make blob out of our blobs, and open it.
+     console.log("mediaRecorder.onstop");
      var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
      document.querySelector("audio").src = URL.createObjectURL(blob);
    };
