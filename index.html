@@ -49,14 +49,14 @@
       console.log("mediaRecorder.onstop");
       blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
       console.log("starting set audio source");
-      document.querySelector("audio").src = URL.createObjectURL(blob);
+      window.sessionStorage.audioblob = blob;
+      document.querySelector("audio").src = URL.createObjectURL(window.sessionStorage.audioblob);
       console.log("finished set audio source");
     };
   };
 
   navigator.mediaDevices.getUserMedia({ audio: true, video: false })
        .then(handleSuccess);
-  console.log("THE END");
 </script>
 
 </body>
