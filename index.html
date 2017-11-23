@@ -2,7 +2,48 @@
 <body>
 HELLO WORLD!
 
-<div>
+<h1>createMediaStreamDestination() demo</h1>
+
+<p>Encoding a pure sine wave to an Opus file </p>
+<button>Make sine wave</button>
+<audio controls></audio>
+<script>
+ var button = document.querySelector("button");
+ var clicked = false;
+ var chunks = [];
+ var audioContext = new AudioContext();
+ var oscillator = audioContext.createOscillator();
+ var dest = audioContext.createMediaStreamDestination();
+ var mediaRecorder = new MediaRecorder(dest.stream);
+ oscillator.connect(dest);
+
+ button.addEventListener("click", function(element) {
+   if (!clicked) {
+       mediaRecorder.start();
+       oscillator.start(0);
+       element.target.innerHTML = "Stop recording";
+       clicked = true;
+     } else {
+       mediaRecorder.stop();
+       oscillator.stop(0);
+       element.target.disabled = true;
+     }
+ });
+
+ mediaRecorder.ondataavailable = function(evt) {
+   // push each chunk (blobs) in an array
+   chunks.push(evt.data);
+ };
+
+ mediaRecorder.onstop = function(evt) {
+   // Make blob out of our blobs, and open it.
+   var blob = new Blob(chunks, { 'type' : 'audio/ogg; codecs=opus' });
+   document.querySelector("audio").src = URL.createObjectURL(blob);
+ };
+</script>
+
+
+<!-- <div>
   <audio id="player" controls></audio>
 </div>
 
@@ -26,7 +67,7 @@ HELLO WORLD!
 
   navigator.mediaDevices.getUserMedia({ audio: true, video: false })
       .then(handleSuccess);
-</script>
+</script> -->
 
 <!-- <script>
   var player = document.getElementById('player');
